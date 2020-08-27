@@ -130,7 +130,7 @@ function movecontrib_civicrm_searchColumns($objectName, &$headers, &$rows, &$sel
     //'$selector' => $selector,
   ));*/
 
-  if ($objectName == 'contribution') {
+  if ($objectName == 'contribution' && CRM_Core_Permission::check('allow Move Contribution')) {
     foreach ($rows as &$row) {
       //action column is either a series of links, or a series of links plus a subset
       //unordered list (more button) -- all of which is enclosed in a span
@@ -161,4 +161,13 @@ function movecontrib_civicrm_searchTasks($objectType, &$tasks) {
       'result' => TRUE,
     );
   }
+}
+
+/**
+ *Implementation of hook_civicrm_permission
+ * @param array $permissions
+ */
+function movecontrib_civicrm_permission(&$permissions) {
+  $prefix = ts('Move Contributions') . ': '; // name of extension or module
+  $permissions['allow Move Contribution'] = $prefix . ts('allow Move Contribution');
 }
